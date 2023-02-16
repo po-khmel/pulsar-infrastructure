@@ -85,6 +85,10 @@ resource "openstack_compute_instance_v2" "central-manager" {
       permissions: '0644'
 
     runcmd:
+      - firewall-cmd --permanent --add-service=nfs
+      - firewall-cmd --permanent --add-service=mountd
+      - firewall-cmd --permanent --add-service=rpc-bind
+      - firewall-cmd --reload
       - [mv, /etc/ssh/vgcn.key, /home/centos/.ssh/id_rsa]
       - chmod 0600 /home/centos/.ssh/id_rsa
       - [chown, centos.centos, /home/centos/.ssh/id_rsa]
