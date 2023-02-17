@@ -3,7 +3,7 @@ variable "nfs_disk_size" {
 }
 
 variable "flavors" {
-  type = "map"
+  type = map
   default = {
     "central-manager" = "m1.medium"
     "nfs-server" = "m1.medium"
@@ -21,7 +21,7 @@ variable "gpu_node_count" {
 }
 
 variable "image" {
-  type = "map"
+  type = map
   default = {
 #    "name" = "vggp-v60-j326-d1dfcf46c4cd-main.raw"
 #    "image_source_url" = "https://usegalaxy.eu/static/vgcn/vggp-v60-j326-d1dfcf46c4cd-main.raw"
@@ -33,7 +33,7 @@ variable "image" {
 }
 
 variable "public_key" {
-  type = "map"
+  type = map
   default = {
     name = "key_label"
 	  pubkey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEgz4Q2Iy6rwmn2ol7gtRN7tcMyk7E8Q3Grrlyf+ck/E6Ik7GxIGnnAhBvlOF9drbuy7tUI3BpDl4+PHtL0ls3x0+GO/MOfb/YB+aww9C7n1TaXIsMoYYegxNRen+3Mnvze2CGFibjRcDiG+oy3X9ijkItF+NByl/fidzd8NRi49jHr3/LVJ1SR2uo3HFELlkaW7vWVw/u/QcApYSkm00VvUroafBgMlZr821/d076fqXDJMtRTf1Oggt7+k6jzTmQmKspEBh8zB29YAcQa24VgTLJ5mYyRJX+kqJE/Madoph2+obNmxm6CpmCjm9IuxigAD8yH/1pcwy2Yz8Bq61D Generated-by-Nova"
@@ -49,7 +49,7 @@ variable "name_suffix" {
 }
 
 variable "secgroups_cm" {
-  type = "list"
+  type = list
   default = [
     "vgcn-public-ssh-test01",
     "vgcn-ingress-private",
@@ -58,7 +58,7 @@ variable "secgroups_cm" {
 }
 
 variable "secgroups" {
-  type = "list"
+  type = list
   default = [
     "vgcn-ingress-private",
     "vgcn-egress-public",
@@ -71,7 +71,7 @@ variable "public_network" {
 }
 
 variable "private_network" {
-  type = "map"
+  type = map
   default  = {
     name = "elixir-VM-net"
     subnet_name = "elixir-VM-subnet"
