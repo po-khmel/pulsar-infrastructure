@@ -84,10 +84,10 @@ resource "openstack_compute_instance_v2" "central-manager" {
       path: /etc/ssh/ssh_config
       permissions: '0644'
 
-    # runcmd:
-    #   - [mv, /etc/ssh/vgcn.key, /home/centos/.ssh/id_rsa]
-    #   - chmod 0600 /home/centos/.ssh/id_rsa
-    #   - [chown, centos.centos, /home/centos/.ssh/id_rsa]
+    runcmd:
+      - [mv, /etc/ssh/vgcn.key, /home/centos/.ssh/id_rsa]
+      - chmod 0600 /home/centos/.ssh/id_rsa
+      - [chown, centos.centos, /home/centos/.ssh/id_rsa]
   EOF
 }
 
