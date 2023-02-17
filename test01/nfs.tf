@@ -60,9 +60,9 @@ data "template_cloudinit_config" "nfs-share" {
       - firewall-cmd --permanent --add-service=mountd
       - firewall-cmd --permanent --add-service=rpc-bind
       - firewall-cmd --reload
-      - [ systemctl, enable, nfs-server ]
-      - [ systemctl, start, nfs-server ]
-      - [ exportfs, -avr ]
+      # - [ systemctl, enable, nfs-server ]
+      # - [ systemctl, start, nfs-server ]
+      # - [ exportfs, -avr ]
   EOF
   }
 
