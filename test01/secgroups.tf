@@ -36,7 +36,7 @@ resource "openstack_networking_secgroup_rule_v2" "egress-public-6" {
 }
 
 resource "openstack_networking_secgroup_v2" "public-ssh" {
-  name                 = "${var.name_prefix}public-ssh-test01"
+  name                 = "${var.name_prefix}public-ssh"
   description          = "[tf] Allow SSH connections from anywhere"
   delete_default_rules = "true"
 }

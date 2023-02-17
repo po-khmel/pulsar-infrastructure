@@ -51,7 +51,7 @@ variable "name_suffix" {
 variable "secgroups_cm" {
   type = list
   default = [
-    "vgcn-public-ssh-test01",
+    "vgcn-public-ssh",
     "vgcn-ingress-private",
     "vgcn-egress-public",
   ]
