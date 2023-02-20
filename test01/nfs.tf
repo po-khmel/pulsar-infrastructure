@@ -26,7 +26,7 @@ resource "openstack_compute_instance_v2" "nfs-server" {
     delete_on_termination = true
   }
 
-  user_data = "${data.template_cloudinit_config.nfs-share.rendered}"
+  user_data = "${data.cloudinit_config.nfs-share.rendered}"
 }
 
 
