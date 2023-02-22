@@ -63,6 +63,8 @@ data "cloudinit_config" "nfs-share" {
       - [ systemctl, enable, nfs-server ]
       - [ systemctl, start, nfs-server ]
       - [ exportfs, -avr ]
+      - 'sh' '-xc' 'sed -i '\''s|nameserver 10.0.2.3||g'\'' /etc/resolv.conf'
+      - 'sh' '-xc' 'sed -i '\''s|localhost.localdomain|$(hostname -f)|g'\'' /etc/telegraf/telegraf.conf'
   EOF
   }
 
