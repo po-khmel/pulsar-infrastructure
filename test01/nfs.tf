@@ -60,12 +60,12 @@ data "cloudinit_config" "nfs-share" {
       - firewall-cmd --permanent --add-service=mountd
       - firewall-cmd --permanent --add-service=rpc-bind
       - firewall-cmd --reload
-      - systemctl enable nfs-server
-      - systemctl start nfs-server
-      - exportfs -avr
+      - [systemctl, enable, nfs-server]
+      - [systemctl, start, nfs-server]
+      - [exportfs, -avr]
       - 'sh' '-xc' 'sed -i '\''s|nameserver 10.0.2.3||g'\'' /etc/resolv.conf'
       - 'sh' '-xc' 'sed -i '\''s|localhost.localdomain|$(hostname -f)|g'\'' /etc/telegraf/telegraf.conf'
-      - systemctl restart telegraf
+      - [systemctl, restart, telegraf]
   EOF
   }
 
