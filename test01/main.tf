@@ -48,7 +48,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
       path: /etc/ssh/vgcn.key
       permission: '0644'
     - content: |
-        CONDOR_HOST = localhost
+        CONDOR_HOST = ${openstack_compute_instance_v2.central-manager.network.0.fixed_ip_v4}
         ALLOW_WRITE = *
         ALLOW_READ = $(ALLOW_WRITE)
         ALLOW_NEGOTIATOR = $(ALLOW_WRITE)
@@ -73,8 +73,8 @@ resource "openstack_compute_instance_v2" "central-manager" {
     - content: |
         Host *
             GSSAPIAuthentication yes
-        	ForwardX11Trusted yes
-        	SendEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+        	      ForwardX11Trusted yes
+        	      SendEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
             SendEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
             SendEnv LC_IDENTIFICATION LC_ALL LANGUAGE
             SendEnv XMODIFIERS
@@ -91,7 +91,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
     - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
     - [sh, -xc, sed -i 's|localhost.localdomain|$(hostname -f)|g' /etc/telegraf/telegraf.conf]
     - [systemctl, restart, telegraf]
-    - curl -fsSL "https://get.htcondor.org" | GET_HTCONDOR_PASSWORD="123456" /bin/bash -s -- --no-dry-run --central-manager 192.168.208.246
+    - curl -fsSL "https://get.htcondor.org" | sudo GET_HTCONDOR_PASSWORD="123456" /bin/bash -s -- --no-dry-run --central-manager ${openstack_compute_instance_v2.central-manager.network.0.fixed_ip_v4}
   EOF
 }
 
