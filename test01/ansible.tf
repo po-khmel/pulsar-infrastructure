@@ -5,6 +5,6 @@ data "template_file" "ansible-vars" {
   vars = {
     condor_password = "${random_password.condor-password.result}"
     condor_host = "${openstack_compute_instance_v2.central-manager.access_ip_v4}"
-    condor_ip_list =["${openstack_compute_instance_v2.exec-node[0].access_ip_v4}", "${openstack_compute_instance_v2.exec-node[1].access_ip_v4}"]
+    condor_ip_list = "${var.list_of_ipv4}"
   }
 }

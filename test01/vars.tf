@@ -82,3 +82,11 @@ variable "private_network" {
 variable "ssh-port" {
   default = "22"
 }
+
+variable "list_of_ipv4" {
+  type = list
+  default = [
+    "${openstack_compute_instance_v2.exec-node[0].access_ip_v4}", 
+    "${openstack_compute_instance_v2.exec-node[1].access_ip_v4}"
+  ]
+}
