@@ -18,7 +18,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
   #   destination = "/etc/ssh/vgcn.key"
   # }
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i '${self.ipv4_address},' --private-key /home/centos/.ssh/id_rsa --extra-vars= @ansible-vars.json condor-install-cm.yml"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i localhost --private-key /home/centos/.ssh/id_rsa --extra-vars= @ansible-vars.json condor-install-cm.yml"
   }
 
   user_data = <<-EOF
