@@ -6,14 +6,14 @@ resource "openstack_compute_instance_v2" "exec-node" {
   image_id        = "${data.openstack_images_image_v2.vgcn-image.id}"
   key_pair        = "${openstack_compute_keypair_v2.my-cloud-key.name}"
   security_groups = "${var.secgroups}"
-  authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
+  # authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
 
   network {
     uuid = "${data.openstack_networking_network_v2.internal.id}"
   }
 
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i '${self.ipv4_address},' --private-key vgcn.key --extra-vars= @ansible-vars.json condor-install-exec.yml"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i '${self.ipv4_address},' --private-key /home/centos/.ssh/id_rsa --extra-vars= @ansible-vars.json condor-install-exec.yml"
   }
 
   user_data = <<-EOF
