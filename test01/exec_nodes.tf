@@ -6,9 +6,14 @@ resource "openstack_compute_instance_v2" "exec-node" {
   image_id        = "${data.openstack_images_image_v2.vgcn-image.id}"
   key_pair        = "${openstack_compute_keypair_v2.my-cloud-key.name}"
   security_groups = "${var.secgroups}"
+  authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
 
   network {
     uuid = "${data.openstack_networking_network_v2.internal.id}"
+  }
+
+  provisioner "local-exec" {
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i '${self.ipv4_address},' --private-key vgcn.key --extra-vars= @ansible-vars.json condor-install-exec.yml"
   }
 
   user_data = <<-EOF
@@ -56,6 +61,6 @@ resource "openstack_compute_instance_v2" "exec-node" {
     - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
     - [sh, -xc, sed -i 's|localhost.localdomain|$(hostname -f)|g' /etc/telegraf/telegraf.conf]
     - [systemctl, restart, telegraf]
-    - curl -fsSL "https://get.htcondor.org" | sudo GET_HTCONDOR_PASSWORD="123456" /bin/bash -s -- --no-dry-run --execute ${openstack_compute_instance_v2.central-manager.network.0.fixed_ip_v4}
+    # - curl -fsSL "https://get.htcondor.org" | sudo GET_HTCONDOR_PASSWORD="123456" /bin/bash -s -- --no-dry-run --execute ${openstack_compute_instance_v2.central-manager.network.0.fixed_ip_v4}
   EOF
 }

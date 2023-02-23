@@ -1,0 +1,14 @@
+---
+- name: Install HTCondor Central Manager on Pulsar
+  become: yes
+  hosts: all
+  roles:
+    - name: usegalaxy_eu.htcondor
+      vars:
+        condor_role: central-manager
+        condor_copy_template: false
+  post_tasks:
+    - ansible.builtin.cron:
+        minute: 0
+        job: "/usr/bin/condor_token_request_auto_approve -netblock {{ item }} -lifetime 3660"
+      loop: condor_ip_list
