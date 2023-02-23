@@ -48,7 +48,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
       path: /etc/ssh/vgcn.key
       permission: '0644'
     - content: |
-        CONDOR_HOST = ${openstack_compute_instance_v2.central-manager.access_ip_v4}
+        CONDOR_HOST = localhost
         ALLOW_WRITE = *
         ALLOW_READ = $(ALLOW_WRITE)
         ALLOW_NEGOTIATOR = $(ALLOW_WRITE)
@@ -91,7 +91,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
     - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
     - [sh, -xc, sed -i 's|localhost.localdomain|$(hostname -f)|g' /etc/telegraf/telegraf.conf]
     - [systemctl, restart, telegraf]
-    - curl -fsSL "https://get.htcondor.org" | sudo GET_HTCONDOR_PASSWORD="123456" /bin/bash -s -- --no-dry-run --central-manager ${openstack_compute_instance_v2.central-manager.access_ip_v4}
+    - curl -fsSL "https://get.htcondor.org" | sudo GET_HTCONDOR_PASSWORD="123456" /bin/bash -s -- --no-dry-run --central-manager localhost
   EOF
 }
 
