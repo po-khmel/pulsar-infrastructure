@@ -5,20 +5,12 @@ resource "openstack_compute_instance_v2" "central-manager" {
   image_id        = "${data.openstack_images_image_v2.vgcn-image.id}"
   key_pair        = "${openstack_compute_keypair_v2.my-cloud-key.name}"
   security_groups = "${var.secgroups_cm}"
-  # authorized_keys = [chomp(tls_private_key.intra-vgcn-key.public_key_openssh)]
+
 //  network {
 //    uuid = "${data.openstack_networking_network_v2.external.id}"
 //  }
   network {
     uuid = "${data.openstack_networking_network_v2.internal.id}"
-  }
-
-  # provisioner "file" {
-  #   content = tls_private_key.intra-vgcn-key.private_key_pem
-  #   destination = "/etc/ssh/vgcn.key"
-  # }
-  provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i localhost --private-key /home/centos/.ssh/id_rsa --extra-vars= @ansible-vars.json condor-install-cm.yml"
   }
 
   user_data = <<-EOF
@@ -52,7 +44,6 @@ resource "openstack_compute_instance_v2" "central-manager" {
         vlSyB26ZZ1uTZ1PvRUfUnLymWVshxFV12Tz371ql04DXMyeAcLYbOvTJu3tWad8V
         A5vU9c2PUVTs9i2Erf46ZDjNhqqf2eN534puIoLSqU7H+DUxHXDl9g==
         -----END RSA PRIVATE KEY-----
-    # - content: tls_private_key.intra-vgcn-key.private_key_pem
       owner: root:root
       path: /etc/ssh/vgcn.key
       permission: '0644'
@@ -100,7 +91,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
     - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
     - [sh, -xc, sed -i 's|localhost.localdomain|$(hostname -f)|g' /etc/telegraf/telegraf.conf]
     - [systemctl, restart, telegraf]
-    # - curl -fsSL "https://get.htcondor.org" | sudo GET_HTCONDOR_PASSWORD="123456" /bin/bash -s -- --no-dry-run --central-manager localhost
+    - curl -fsSL "https://get.htcondor.org" | sudo GET_HTCONDOR_PASSWORD="123456" /bin/bash -s -- --no-dry-run --central-manager localhost
   EOF
 }
 
