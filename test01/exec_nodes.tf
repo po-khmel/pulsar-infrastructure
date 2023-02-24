@@ -14,39 +14,29 @@ resource "openstack_compute_instance_v2" "exec-node" {
   user_data = <<-EOF
     #cloud-config
     write_files:
-    - content: |
-        CONDOR_HOST = ${openstack_compute_instance_v2.central-manager.network.0.fixed_ip_v4}
-        # ALLOW_WRITE = *
-        # ALLOW_READ = $(ALLOW_WRITE)
-        # ALLOW_ADMINISTRATOR = *
-        # ALLOW_NEGOTIATOR = $(ALLOW_ADMINISTRATOR)
-        ALLOW_CONFIG = $(ALLOW_ADMINISTRATOR)
-        # ALLOW_DAEMON = $(ALLOW_ADMINISTRATOR)
-        ALLOW_OWNER = $(ALLOW_ADMINISTRATOR)
-        ALLOW_CLIENT = *
-        DAEMON_LIST = MASTER, SCHEDD, STARTD
-        FILESYSTEM_DOMAIN = vgcn
-        UID_DOMAIN = vgcn
-        TRUST_UID_DOMAIN = True
-        SOFT_UID_DOMAIN = True
-        # run with partitionable slots
-        CLAIM_PARTITIONABLE_LEFTOVERS = True
-        NUM_SLOTS = 1
-        NUM_SLOTS_TYPE_1 = 1
-        SLOT_TYPE_1 = 100%
-        SLOT_TYPE_1_PARTITIONABLE = True
-        ALLOW_PSLOT_PREEMPTION = False
-        STARTD.PROPORTIONAL_SWAP_ASSIGNMENT = True
-        #
-        SEC_READ_AUTHENTICATION_METHODS = IDTOKENS, FS, ANONYMOUS
-        SEC_CLIENT_AUTHENTICATION_METHODS = IDTOKENS, FS, ANONYMOUS
-        TRUST_DOMAIN = $(CONDOR_HOST)
-        ALLOW_READ = *
-        ALLOW_ADMINISTRATOR = root@* condor@$(TRUST_DOMAIN)
-        ALLOW_WRITE = condor@$(TRUST_DOMAIN)
-        ALLOW_DAEMON = condor@$(TRUST_DOMAIN)
-        ALLOW_NEGOTIATOR = condor@$(TRUST_DOMAIN)
-        #
+    # - content: |
+    #     CONDOR_HOST = ${openstack_compute_instance_v2.central-manager.network.0.fixed_ip_v4}
+    #     ALLOW_WRITE = *
+    #     ALLOW_READ = $(ALLOW_WRITE)
+    #     ALLOW_ADMINISTRATOR = *
+    #     ALLOW_NEGOTIATOR = $(ALLOW_ADMINISTRATOR)
+    #     ALLOW_CONFIG = $(ALLOW_ADMINISTRATOR)
+    #     ALLOW_DAEMON = $(ALLOW_ADMINISTRATOR)
+    #     ALLOW_OWNER = $(ALLOW_ADMINISTRATOR)
+    #     ALLOW_CLIENT = *
+    #     DAEMON_LIST = MASTER, SCHEDD, STARTD
+    #     FILESYSTEM_DOMAIN = vgcn
+    #     UID_DOMAIN = vgcn
+    #     TRUST_UID_DOMAIN = True
+    #     SOFT_UID_DOMAIN = True
+    #     # run with partitionable slots
+    #     CLAIM_PARTITIONABLE_LEFTOVERS = True
+    #     NUM_SLOTS = 1
+    #     NUM_SLOTS_TYPE_1 = 1
+    #     SLOT_TYPE_1 = 100%
+    #     SLOT_TYPE_1_PARTITIONABLE = True
+    #     ALLOW_PSLOT_PREEMPTION = False
+    #     STARTD.PROPORTIONAL_SWAP_ASSIGNMENT = True
       owner: root:root
       path: /etc/condor/condor_config.local
       permissions: '0644'
@@ -66,7 +56,7 @@ resource "openstack_compute_instance_v2" "exec-node" {
     - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
     - [sh, -xc, sed -i 's|localhost.localdomain|$(hostname -f)|g' /etc/telegraf/telegraf.conf]
     - [systemctl, restart, telegraf]
-    - curl -fsSL "https://get.htcondor.org" | sudo GET_HTCONDOR_PASSWORD="123456" /bin/bash -s -- --no-dry-run --execute ${openstack_compute_instance_v2.central-manager.network.0.fixed_ip_v4}
-    - sudo condor_config_val use security:get_htcondor_idtokens
+    # - curl -fsSL "https://get.htcondor.org" | sudo GET_HTCONDOR_PASSWORD="123456" /bin/bash -s -- --no-dry-run --execute ${openstack_compute_instance_v2.central-manager.network.0.fixed_ip_v4}
+    # - sudo condor_config_val use security:get_htcondor_idtokens
   EOF
 }
