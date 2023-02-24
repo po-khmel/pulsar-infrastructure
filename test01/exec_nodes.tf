@@ -6,7 +6,6 @@ resource "openstack_compute_instance_v2" "exec-node" {
   image_id        = "${data.openstack_images_image_v2.vgcn-image.id}"
   key_pair        = "${openstack_compute_keypair_v2.my-cloud-key.name}"
   security_groups = "${var.secgroups}"
-  # authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
 
   network {
     uuid = "${data.openstack_networking_network_v2.internal.id}"
@@ -38,6 +37,7 @@ resource "openstack_compute_instance_v2" "exec-node" {
         SLOT_TYPE_1_PARTITIONABLE = True
         ALLOW_PSLOT_PREEMPTION = False
         STARTD.PROPORTIONAL_SWAP_ASSIGNMENT = True
+        SEC_PASSWORD_FILE = /etc/condor/passwords.d/POOL
       owner: root:root
       path: /etc/condor/condor_config.local
       permissions: '0644'

@@ -57,6 +57,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
         UID_DOMAIN = vgcn
         TRUST_UID_DOMAIN = True
         SOFT_UID_DOMAIN = True
+        SEC_PASSWORD_FILE = /etc/condor/passwords.d/POOL
       owner: root:root
       path: /etc/condor/condor_config.local
       permissions: '0644'
