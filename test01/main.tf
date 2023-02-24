@@ -93,7 +93,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
     - [sh, -xc, sed -i 's|localhost.localdomain|$(hostname -f)|g' /etc/telegraf/telegraf.conf]
     - [systemctl, restart, telegraf]
     # - curl -fsSL https://get.htcondor.org | sudo GET_HTCONDOR_PASSWORD=demo /bin/bash -s -- --no-dry-run --central-manager localhost
-    - sudo /usr/bin/condor_token_request_auto_approve -netblock 192.168.208.0/24 -lifetime 3660
+    # - sudo /usr/bin/condor_token_request_auto_approve -netblock 192.168.208.0/24 -lifetime 3660
   EOF
 }
 

@@ -37,9 +37,9 @@ resource "openstack_compute_instance_v2" "exec-node" {
     #     SLOT_TYPE_1_PARTITIONABLE = True
     #     ALLOW_PSLOT_PREEMPTION = False
     #     STARTD.PROPORTIONAL_SWAP_ASSIGNMENT = True
-      owner: root:root
-      path: /etc/condor/condor_config.local
-      permissions: '0644'
+    #   owner: root:root
+    #   path: /etc/condor/condor_config.local
+    #   permissions: '0644'
     - content: |
         /data           /etc/auto.data          nfsvers=3
       owner: root:root
