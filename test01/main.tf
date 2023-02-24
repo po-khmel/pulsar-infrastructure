@@ -92,7 +92,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
     - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
     - [sh, -xc, sed -i 's|localhost.localdomain|$(hostname -f)|g' /etc/telegraf/telegraf.conf]
     - [systemctl, restart, telegraf]
-    - curl -fsSL https://get.htcondor.org | /bin/bash -s -- --no-dry-run --central-manager vgcn-central-manager-usegalaxy-eu
+    - curl -fsSL "https://get.htcondor.org" | sudo GET_HTCONDOR_PASSWORD="123456" /bin/bash -s -- --no-dry-run --central-manager vgcn-central-manager-usegalaxy-eu
     - sudo condor_config_val use security:get_htcondor_idtokens
     - sudo /usr/bin/condor_token_request_auto_approve -netblock 192.168.208.0/24 -lifetime 3660
   EOF
