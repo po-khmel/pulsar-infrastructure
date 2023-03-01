@@ -13,6 +13,9 @@ resource "openstack_compute_instance_v2" "central-manager" {
     uuid = "${data.openstack_networking_network_v2.internal.id}"
   }
 
+  provisioner "local-exec" {
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i '${self.access_ip_v4},' --private-key ${var.pvt_key} --extra-vars='condor_ip_range=${var.private_network.cidr4} condor_host=${self.access_ip_v4} condor_ip_range=${var.private_network.cidr4}' condor-install-cm.yml"  }
+
   user_data = <<-EOF
     #cloud-config
     write_files:
@@ -47,20 +50,21 @@ resource "openstack_compute_instance_v2" "central-manager" {
       owner: root:root
       path: /etc/ssh/vgcn.key
       permission: '0644'
-    # - content: |
-    #     CONDOR_HOST = localhost
-    #     ALLOW_WRITE = *
-    #     ALLOW_READ = $(ALLOW_WRITE)
-    #     ALLOW_NEGOTIATOR = $(ALLOW_WRITE)
-    #     DAEMON_LIST = COLLECTOR, MASTER, NEGOTIATOR, SCHEDD
-    #     FILESYSTEM_DOMAIN = vgcn
-    #     UID_DOMAIN = vgcn
-    #     TRUST_UID_DOMAIN = True
-    #     SOFT_UID_DOMAIN = True
-    #     SEC_DEFAULT_AUTHENTICATION_METHODS = IDTOKENS, FS
-    #   owner: root:root
-    #   path: /etc/condor/condor_config.local
-    #   permissions: '0644'
+    - content: |
+        # CONDOR_HOST = localhost
+        CONDOR_HOST = ${openstack_compute_instance_v2.central-manager.access_ip_v4}
+        ALLOW_WRITE = *
+        ALLOW_READ = $(ALLOW_WRITE)
+        ALLOW_NEGOTIATOR = $(ALLOW_WRITE)
+        DAEMON_LIST = COLLECTOR, MASTER, NEGOTIATOR, SCHEDD
+        FILESYSTEM_DOMAIN = vgcn
+        UID_DOMAIN = vgcn
+        TRUST_UID_DOMAIN = True
+        SOFT_UID_DOMAIN = True
+        SEC_DEFAULT_AUTHENTICATION_METHODS = IDTOKENS, FS
+      owner: root:root
+      path: /etc/condor/condor_config.local
+      permissions: '0644'
     - content: |
         /data           /etc/auto.data          nfsvers=3
       owner: root:root
@@ -82,14 +86,13 @@ resource "openstack_compute_instance_v2" "central-manager" {
             StrictHostKeyChecking no
             UserKnownHostsFile=/dev/null
       owner: root:root
-      path: /etc/ssh/ssh_config
+      path: /etc.intra-vgcn-key.ssh_config
       permissions: '0644'
 
     runcmd:
-    - [mv, /etc/ssh/vgcn.key, /home/centos/.ssh/id_rsa]
-    - chmod 0600 /home/centos/.ssh/id_rsa
-    - [chown, centos.centos, /home/centos/.ssh/id_rsa]
-    - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
+      - [mv, /etc.intra-vgcn-key.vgcn.key, /home/centos/.ssh/id_rsa]
+      - chmod 0600 /home/centos/.intra-vgcn-key.id_rsa
+      - [chown, centos.centos, /home/centos/.intra-vgcn-key.id_rsa]    - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
     - [sh, -xc, sed -i 's|localhost.localdomain|$(hostname -f)|g' /etc/telegraf/telegraf.conf]
     - [systemctl, restart, telegraf]
     # - curl -fsSL https://get.htcondor.org | sudo GET_HTCONDOR_PASSWORD=demo /bin/bash -s -- --no-dry-run --central-manager localhost

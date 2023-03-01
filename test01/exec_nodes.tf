@@ -11,6 +11,10 @@ resource "openstack_compute_instance_v2" "exec-node" {
     uuid = "${data.openstack_networking_network_v2.internal.id}"
   }
 
+  provisioner "local-exec" {
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i '${self.access_ip_v4},' --private-key ${var.pvt_key} --extra-vars='condor_ip_range=${var.private_network.cidr4} condor_host=${self.access_ip_v4} condor_ip_range=${var.private_network.cidr4}' condor-install-exec.yml"
+  }
+  
   user_data = <<-EOF
     #cloud-config
     write_files:

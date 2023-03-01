@@ -1,0 +1,9 @@
+---
+- name: Install HTCondor Central Manager on Pulsar
+  become: yes
+  hosts: all
+  roles:
+    - name: usegalaxy_eu.htcondor
+      vars:
+        condor_role: execute
+        condor_copy_template: false

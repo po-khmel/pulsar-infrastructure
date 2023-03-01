@@ -82,3 +82,5 @@ variable "private_network" {
 variable "ssh-port" {
   default = "22"
 }
+
+variable "pvt_key" {}
