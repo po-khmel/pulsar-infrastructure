@@ -14,7 +14,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
   }
 
   provisioner "local-exec" {
-    command = "sleep 60; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u centos -b -i '${self.access_ip_v4},' --private-key /home/centos/.ssh/id_rsa --extra-vars='condor_ip_range=${var.private_network.cidr4} condor_host=${self.access_ip_v4} condor_ip_range=${var.private_network.cidr4} condor_password=${var.condor_pass}' condor-install-cm.yml"
+    command = "sleep 180; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u centos -b -i '${self.access_ip_v4},' --private-key /home/centos/.ssh/id_rsa --extra-vars='condor_host=${self.access_ip_v4} condor_ip_range=${var.private_network.cidr4} condor_password=${var.condor_pass}' condor-install-cm.yml"
   }
 
   user_data = <<-EOF
