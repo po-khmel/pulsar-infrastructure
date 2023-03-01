@@ -61,7 +61,6 @@ resource "openstack_compute_instance_v2" "central-manager" {
       permission: '0644'
     - content: |
         # CONDOR_HOST = localhost
-        # CONDOR_HOST = ${openstack_compute_instance_v2.central-manager.access_ip_v4}
         ALLOW_WRITE = *
         ALLOW_READ = $(ALLOW_WRITE)
         ALLOW_NEGOTIATOR = $(ALLOW_WRITE)
