@@ -83,6 +83,6 @@ variable "ssh-port" {
   default = "22"
 }
 
-variable "pvt_key" {}
+# variable "pvt_key" {}
 
 variable "condor_pass" {}
