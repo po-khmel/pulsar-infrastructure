@@ -84,3 +84,5 @@ variable "ssh-port" {
 }
 
 variable "pvt_key" {}
+
+variable "condor_pass" {}

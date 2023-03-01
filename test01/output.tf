@@ -14,10 +14,6 @@ output "floating_IP" {
   value = "${openstack_networking_floatingip_v2.myip.address}"
 }
 
-output "name" {
-  "make a list of all exec node IPv4 adresses"
-}
-
 resource "local_file" "private_key" {
   content         = tls_private_key.intra-vgcn-key.private_key_pem
   filename        = "vgcn.key"
