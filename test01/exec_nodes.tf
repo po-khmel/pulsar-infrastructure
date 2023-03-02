@@ -86,7 +86,7 @@ resource "openstack_compute_instance_v2" "exec-node" {
     - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
     - [sh, -xc, sed -i 's|localhost.localdomain|$(hostname -f)|g' /etc/telegraf/telegraf.conf]
     - [systemctl, restart, telegraf]
-    - [ python3, -m, pip, install, ansible ]
+    # - [ python3, -m, pip, install, ansible ]
     - [ ansible-galaxy, install, -p, /home/centos/.ansible/roles, usegalaxy_eu.htcondor ]
     - [ ansible-playbook, -i, 'localhost,', /home/centos/condor.yml]
     - systemctl start condor
