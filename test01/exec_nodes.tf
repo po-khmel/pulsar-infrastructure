@@ -26,7 +26,7 @@ resource "openstack_compute_instance_v2" "exec-node" {
         templates_dir: /etc/cloud/templates
       ssh_svcname: sshd
     write_files:
-    # - content: |
+    - content: |
         # CONDOR_HOST = ${openstack_compute_instance_v2.central-manager.network.0.fixed_ip_v4}
         ALLOW_WRITE = *
         ALLOW_READ = $(ALLOW_WRITE)
