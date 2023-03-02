@@ -25,10 +25,10 @@ variable "image" {
   default = {
 #    "name" = "vggp-v60-j326-d1dfcf46c4cd-main.raw"
 #    "image_source_url" = "https://usegalaxy.eu/static/vgcn/vggp-v60-j326-d1dfcf46c4cd-main.raw"
-#    "name" = "vggp-v60-j220-19aa3210648b-dev.raw"
-#    "image_source_url" = "https://usegalaxy.eu/static/vgcn/vggp-v60-j220-19aa3210648b-dev.raw"
-   "name" = "vggp-v60-j224-e0d36d08062d-dev.raw"
-   "image_source_url" = "https://usegalaxy.eu/static/vgcn/vggp-v60-j224-e0d36d08062d-dev.raw"  
+   "name" = "vggp-v60-j220-19aa3210648b-dev.raw"
+   "image_source_url" = "https://usegalaxy.eu/static/vgcn/vggp-v60-j220-19aa3210648b-dev.raw"
+  #  "name" = "vggp-v60-j224-e0d36d08062d-dev.raw"
+  #  "image_source_url" = "https://usegalaxy.eu/static/vgcn/vggp-v60-j224-e0d36d08062d-dev.raw"  
     "container_format" = "bare"
     "disk_format" = "raw"
    }
