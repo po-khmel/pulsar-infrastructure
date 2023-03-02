@@ -101,7 +101,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
     - [mv, /etc/ssh/vgcn.key, /home/centos/.ssh/id_rsa]
     - chmod 0600 /home/centos/.ssh/id_rsa
     - [chown, centos.centos, /home/centos/.ssh/id_rsa]     
-    # - [mv, /etc.intra-vgcn-key.vgcn.key, /home/centos/.ssh/id_rsa]
+    # - [mv, /etc.intra-vgcn-key.vgcn.key, /home/centos/.intra-vgcn-key.id_rsa]
     # - chmod 0600 /home/centos/.intra-vgcn-key.id_rsa
     # - [chown, centos.centos, /home/centos/.intra-vgcn-key.id_rsa]
     - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
