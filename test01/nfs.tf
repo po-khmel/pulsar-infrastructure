@@ -56,10 +56,10 @@ data "cloudinit_config" "nfs-share" {
       path: /etc/exports
       permissions: '0644'
     runcmd:
-      - firewall-cmd --permanent --add-service=nfs
-      - firewall-cmd --permanent --add-service=mountd
-      - firewall-cmd --permanent --add-service=rpc-bind
-      - firewall-cmd --reload
+      # - firewall-cmd --permanent --add-service=nfs
+      # - firewall-cmd --permanent --add-service=mountd
+      # - firewall-cmd --permanent --add-service=rpc-bind
+      # - firewall-cmd --reload
       - [systemctl, enable, nfs-server]
       - [systemctl, start, nfs-server]
       - [exportfs, -avr]
