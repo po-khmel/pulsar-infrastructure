@@ -23,8 +23,8 @@ variable "gpu_node_count" {
 variable "image" {
   type = map
   default = {
-   "name" = "vggp-v60-j224-e0d36d08062d-dev.raw"
-   "image_source_url" = "https://usegalaxy.eu/static/vgcn/vggp-v60-j224-e0d36d08062d-dev.raw"  
+    "name" = "vggp-v60-j224-e0d36d08062d-dev.raw"
+    "image_source_url" = "https://usegalaxy.eu/static/vgcn/vggp-v60-j224-e0d36d08062d-dev.raw"  
     "container_format" = "bare"
     "disk_format" = "raw"
    }
