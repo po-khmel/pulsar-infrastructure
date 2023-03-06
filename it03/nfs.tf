@@ -62,6 +62,9 @@ data "cloudinit_config" "nfs-share" {
       - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
       - [sh, -xc, sed -i 's|localhost.localdomain|$(hostname -f)|g' /etc/telegraf/telegraf.conf]
       - [systemctl, restart, telegraf]
+    ssh_authorized_keys:
+      - ${trimspace(tls_private_key.intra-vgcn-key.public_key_openssh)}
+
   EOF
   }
 
