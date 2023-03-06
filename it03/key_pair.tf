@@ -10,6 +10,6 @@ resource "tls_private_key" "intra-vgcn-key" {
 
 resource "local_file" "private_key" {
   content         = tls_private_key.intra-vgcn-key.private_key_pem
-  filename        = "/etc/ssh/vgcn.key"
+  filename        = "vgcn.key"
   file_permission = "0644"
 }

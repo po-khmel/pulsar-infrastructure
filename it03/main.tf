@@ -29,6 +29,11 @@ resource "openstack_compute_instance_v2" "central-manager" {
       distro: rhel
     write_files:
     - content: |
+        ${local_file.private_key.content}
+      owner: root:root
+      path: /etc/ssh/vgcn.key
+      permissions: '0644'
+    - content: |
         ALLOW_WRITE = *
         ALLOW_READ = $(ALLOW_WRITE)
         ALLOW_NEGOTIATOR = $(ALLOW_WRITE)
