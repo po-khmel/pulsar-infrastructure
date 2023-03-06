@@ -29,7 +29,7 @@ resource "openstack_compute_instance_v2" "central-manager" {
       distro: rhel
     write_files:
     - content: |
-        ${tls_private_key.intra-vgcn-key.private_key_pem}
+        ${data.tls_private_key.intra-vgcn-key.private_key_pem}
       owner: root:root
       path: /etc/ssh/vgcn.key
       permissions: '0644'

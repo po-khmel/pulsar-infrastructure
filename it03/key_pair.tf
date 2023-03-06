@@ -7,3 +7,4 @@ resource "tls_private_key" "intra-vgcn-key" {
   algorithm   = "ECDSA"
   ecdsa_curve = "P384"
 }
+
