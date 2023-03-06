@@ -9,7 +9,7 @@ output "ip_v4_internal" {
 //output "ip_v4_public" {
 //  value = "${openstack_compute_instance_v2.central-manager.0.access_ip_v4}"
 //}
-//
+
 output "floating_IP" {
   value = "${openstack_networking_floatingip_v2.myip.address}"
 }
