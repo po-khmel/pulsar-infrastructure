@@ -70,9 +70,9 @@ resource "openstack_compute_instance_v2" "central-manager" {
       permissions: '0644'
 
     runcmd:
-    # - [mv, /etc/ssh/vgcn.key, /home/centos/.ssh/id_rsa]
-    # - chmod 0600 /home/centos/.ssh/id_rsa
-    # - [chown, centos.centos, /home/centos/.ssh/id_rsa]     
+    - [mv, /etc/ssh/vgcn.key, /home/centos/.ssh/id_rsa]
+    - chmod 0600 /home/centos/.ssh/id_rsa
+    - [chown, centos.centos, /home/centos/.ssh/id_rsa]     
     - [sh, -xc, sed -i 's|nameserver 10.0.2.3||g' /etc/resolv.conf]
     - [sh, -xc, sed -i 's|localhost.localdomain|$(hostname -f)|g' /etc/telegraf/telegraf.conf]
     - [systemctl, restart, telegraf]
