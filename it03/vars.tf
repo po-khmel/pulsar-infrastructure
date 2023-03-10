@@ -7,7 +7,7 @@ variable "flavors" {
   default = {
     "central-manager" = "m1.medium"
     "nfs-server" = "m1.medium"
-    "exec-node" = "m1.medium"
+    "exec-node" = "m1.xlarge"
     "gpu-node" = "m1.medium"
   }
 }
