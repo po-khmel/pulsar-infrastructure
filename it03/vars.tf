@@ -1,5 +1,5 @@
 variable "nfs_disk_size" {
-  default = 300
+  default = 500
 }
 
 variable "flavors" {
@@ -13,7 +13,7 @@ variable "flavors" {
 }
 
 variable "exec_node_count" {
-  default = 2
+  default = 4
 }
 
 variable "gpu_node_count" {
